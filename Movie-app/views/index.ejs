@@ -116,24 +116,27 @@
 
             </ul>
         </div>
-        <div class="profile">👤 Saloni</div>
+        <div class="profile">👤</div>
     </nav>
 
     <section class="movie-slider">
         <h2 class="text-white mb-4">Popular Movies</h2>
+
         <div class="slider">
             <% record.map((v,i)=>{ %>
-                <div class="movie-card card">
-                    <img src="https://via.placeholder.com/300x170" class="card-img-top" alt="Movie 1">
-                    <div class="card-body">
-                        <h5 class="card-title">
-                            <%= v.title %>
-                        </h5>
-                        <p class="card-text">
-                            <%= v.duration %>
-                        </p>
+                <a href="/movieDetails">
+                    <div class="movie-card card">
+                        <img src="https://via.placeholder.com/300x170" class="card-img-top" alt="Movie 1">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <%= v.title %>
+                            </h5>
+                            <p class="card-text">
+                                <%= v.duration %>
+                            </p>
+                        </div>
                     </div>
-                </div>
+                </a>
             <% })%>
         </div>
     </section>

@@ -5,6 +5,7 @@
     "fs": "^0.0.1-security",
     "mongodb": "^6.16.0",
     "mongoose": "^8.15.1",
+    "multer": "^2.0.0",
     "path": "^0.12.7"
   }
 }
