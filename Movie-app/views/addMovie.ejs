@@ -2,126 +2,133 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <title>Document</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Add New Movie</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
 </head>
 
-<body>
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg px-4">
-        <a class="navbar-brand" href="#">MovieZone</a>
-        <div class="collapse navbar-collapse justify-content-center">
-            <ul class="navbar-nav gap-4">
-                <li class="nav-item">
-                    <a class="nav-link " href="/">Play</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/add">add</a>
-                </li>
+<body class="bg-light">
 
-            </ul>
-        </div>
-        <div class="profile">👤</div>
-    </nav>
-    <div>
-        <h2>Add new Movie</h2>
-        <form action="/addMovie" method="post">
-            <table border="1">
-                <tr>
-                    <td>
-                        Title
-                    </td>
-                    <td>
-                        <input type="text" name="title" id="">
-                    </td>
-                </tr>
-                <tr>
-                    <td>Reating</td>
-                    <td>
-                        <select name="reating" id="">
-                            <option value="-1">give reating</option>
-                            <% var reating=[1,2,3,4,5] %>
-                                <% reating.map((v,i)=>{ %>
-                                    <option value="<%= v %>">
-                                        <%= v %>
-                                    </option>
-                                    <% }) %>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        language
-                    </td>
-                    <td>
-                        <input type="checkbox" name="language" id="" value="english">english
-                        <input type="checkbox" name="language" id="" value="hindi">hindi
-                        <input type="checkbox" name="language" id="" value="gujrati">gujrati
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        genre
-                    </td>
-                    <td>
-                        <input type="checkbox" name="genre" id="" value="action">action
-                        <input type="checkbox" name="genre" id="" value="horror">horror
-                        <input type="checkbox" name="genre" id="" value="drama">drama
-                    </td>
-                </tr>
-                <tr>
-                    <td>certificated</td>
-                    <td>
-                        <input type="radio" name="age" id="" value="under"> under 18
-                        <input type="radio" name="age" id="" value="over"> 18+
-                        <input type="radio" name="age" id="" value="both"> Family
-                    </td>
-                </tr>
-                <tr>
-                    <td>Realese date</td>
-                    <td>
-                        <input type="date" name="" id="">
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        Duration
-                    </td>
-                    <td>
-                        <input type="number" name="duration" id="">Mins
-                    </td>
-                </tr>
-                <tr>
-                    <td>Cast</td>
-                    <td>
-                        <input type="text" name="cast" id="">
-                    </td>
-                </tr>
-                <tr>
-                    <td>Description</td>
-                    <td>
-                        <textarea name="desc" id=""></textarea>
-                    </td>
-                </tr>
-                <!-- <tr>
-                    <td>poster</td>
-                    <td><input type="file" name="posterimg"></td>
-                </tr>
-                <tr>
-                    <td>background image</td>
-                    <td><input type="file" name="bgimg"></td>
-                </tr> -->
-                <tr>
-                    <td>
-                        <input type="submit" value="Add Movie" name="addMovie">
-                    </td>
-
-                </tr>
-            </table>
-        </form>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-4">
+    <a class="navbar-brand" href="#">MovieZone</a>
+    <div class="collapse navbar-collapse justify-content-center">
+      <ul class="navbar-nav gap-4">
+        <li class="nav-item">
+          <a class="nav-link" href="/">Play</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/add">Add</a>
+        </li>
+      </ul>
     </div>
+    <div class="text-white">👤</div>
+  </nav>
+
+  <!-- Movie Form -->
+  <div class="container my-5">
+    <h2 class="mb-4 text-center">Add New Movie</h2>
+    <form action="/addMovie" method="post" enctype="multipart/form-data" class="card p-4 shadow bg-white">
+
+      <div class="mb-3">
+        <label class="form-label">Title</label>
+        <input type="text" name="title" class="form-control" required />
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Rating</label>
+        <select name="reating" class="form-select" required>
+          <option value="">Give rating</option>
+          <% const reating=[1,2,3,4,5]; reating.map((v)=>{ %>
+            <option value="<%= v %>"><%= v %></option>
+          <% }) %>
+        </select>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Language</label><br />
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="checkbox" name="language" value="english" />
+          <label class="form-check-label">English</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="checkbox" name="language" value="hindi" />
+          <label class="form-check-label">Hindi</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="checkbox" name="language" value="gujrati" />
+          <label class="form-check-label">Gujarati</label>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Genre</label><br />
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="checkbox" name="genre" value="action" />
+          <label class="form-check-label">Action</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="checkbox" name="genre" value="horror" />
+          <label class="form-check-label">Horror</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="checkbox" name="genre" value="drama" />
+          <label class="form-check-label">Drama</label>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Certification</label><br />
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="age" value="under" />
+          <label class="form-check-label">Under 18</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="age" value="over" />
+          <label class="form-check-label">18+</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="age" value="both" />
+          <label class="form-check-label">Family</label>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Release Date</label>
+        <input type="date" name="releaseDate" class="form-control" />
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Duration (minutes)</label>
+        <input type="number" name="duration" class="form-control" />
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Cast</label>
+        <input type="text" name="cast" class="form-control" />
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Description</label>
+        <textarea name="desc" rows="4" class="form-control"></textarea>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Poster Image</label>
+        <input type="file" name="posterimg" class="form-control" />
+      </div>
+
+      <!-- Uncomment if you need background image too
+      <div class="mb-3">
+        <label class="form-label">Background Image</label>
+        <input type="file" name="bgimg" class="form-control" />
+      </div> -->
+
+      <button type="submit" class="btn btn-primary">Add Movie</button>
+    </form>
+  </div>
+
 </body>
 
 </html>

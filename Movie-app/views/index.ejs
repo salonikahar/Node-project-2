@@ -11,7 +11,9 @@
             background-color: #12161c;
             color: white;
         }
-
+        a{
+            text-decoration: none;
+        }
         .navbar {
             background-color: #1a1f28;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
@@ -102,7 +104,6 @@
 
 <body>
 
-    <!-- Navbar -->
     <nav class="navbar navbar-expand-lg px-4">
         <a class="navbar-brand" href="#">MovieZone</a>
         <div class="collapse navbar-collapse justify-content-center">
@@ -124,9 +125,9 @@
 
         <div class="slider">
             <% record.map((v,i)=>{ %>
-                <a href="/movieDetails">
+                <a href="/movieDetails/?position=<%= v.id %>" >
                     <div class="movie-card card">
-                        <img src="https://via.placeholder.com/300x170" class="card-img-top" alt="Movie 1">
+                        <img src="<%= v.posterimg %>" class="card-img-top" alt="Movie 1">
                         <div class="card-body">
                             <h5 class="card-title">
                                 <%= v.title %>
