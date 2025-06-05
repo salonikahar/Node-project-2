@@ -1,7 +1,12 @@
 const { log } = require('console');
 let express = require('express')
-let port = 8001
+let port = 8001;
+let path = require('path')
 let app = express();
+
+app.set('view engine','ejs');
+app.set('views' , path.join(__dirname , 'views'));
+app.use(express.static(path.join(__dirname,'assets')))
 
 app.use('/', require('./routes'))
 
