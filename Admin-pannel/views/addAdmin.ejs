@@ -13,7 +13,7 @@
               <small class="text-body float-end">Default label</small>
             </div>
             <div class="card-body">
-              <form method="post" action="/insertData" enctype="">  
+              <form method="post" action="/admin/insertData" enctype="multipart/form-data">
                 <div class="mb-6">
                   <label class="form-label " for="basic-default-fullname">First Name</label>
                   <input type="text" class="form-control" id="basic-default-fullname" placeholder="John"
@@ -40,54 +40,62 @@
                     placeholder="658 799 8941" />
                 </div>
                 <div class="mb-6">
-                  
-                  <label for="exampleFormControlSelect1" class="form-label">Example select</label>
-                  <select class="form-select" id="exampleFormControlSelect1" aria-label="Default select example" name="city">
-                    <option selected>Open this select menu</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
+                  <label class="form-label" for="basic-default-password">Password</label>
+                  <input name="password" type="password" id="basic-default-phone" class="form-control phone-mask" />
+                </div>
+
+                <div class="mb-6">
+                  <label for="exampleFormControlSelect1" class="form-label">City</label>
+                  <select class="form-select" id="exampleFormControlSelect1" aria-label="Default select example"
+                    name="city">
+                    <option selected disabled>Open this select menu</option>
+                    <% let city=['surat', 'baroda' , 'rajkot' ]; %>
+                      <% city.forEach((v)=> { %>
+                        <option value="<%= v %>">
+                          <%= v %>
+                        </option>
+                        <% }) %>
                   </select>
                 </div>
-                <div class="row g-0">
-                  <div class=" mb-6">
-                    <span class="form-label d-block">Hobby</span>
-                    <div class="form-check form-check-inline ">
-                      <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="coding"
-                        name="hobby" />
-                      <label class="form-check-label" for="inlineCheckbox1">coding</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="advanture"
-                        name="hobby" />
-                      <label class="form-check-label" for="inlineCheckbox2">advanture</label>
-                    </div>
 
-                  </div>
-                  <div class="mb-6 ">
-                    <span class="form-label d-block">Gender</span>
-                    <div class="form-check form-check-inline ">
-                      <input class="form-check-input" type="radio" name="gender" id="inlineRadio1"
-                        value="male" />
-                      <label class="form-check-label" for="inlineRadio1">Male</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio" name="gender" id="inlineRadio2"
-                        value="female" />
-                      <label class="form-check-label" for="inlineRadio2">Female</label>
-                    </div>
 
+                <!-- check -->
+
+                <div class=" mb-6">
+                  <span class="form-label d-block">Hobby</span>
+                  <div class="form-check form-check-inline ">
+                    <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="coding" name="hobby" />
+                    <label class="form-check-label" for="inlineCheckbox1">coding</label>
                   </div>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="advanture"
+                      name="hobby" />
+                    <label class="form-check-label" for="inlineCheckbox2">advanture</label>
+                  </div>
+
                 </div>
+                <div class="mb-6 ">
+                  <span class="form-label d-block">Gender</span>
+                  <div class="form-check form-check-inline ">
+                    <input class="form-check-input" type="radio" name="gender" id="inlineRadio1" value="male" />
+                    <label class="form-check-label" for="inlineRadio1">Male</label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="gender" id="inlineRadio2" value="female" />
+                    <label class="form-check-label" for="inlineRadio2">Female</label>
+                  </div>
+
+                </div>
+
                 <div class="mb-6">
                   <label class="form-label" for="basic-default-message">Description</label>
                   <textarea id="basic-default-message" class="form-control"
                     placeholder="Hi, Do you have a moment to talk Joe?" name="description"></textarea>
                 </div>
                 <div class="mb-6">
-                      <label for="formFile" class="form-label">Upload your Profile here</label>
-                      <input class="form-control" type="file" id="formFile" name="profile" />
-                    </div>
+                  <label for="formFile" class="form-label">Upload your Profile here</label>
+                  <input class="form-control" type="file" id="formFile" name="profile" />
+                </div>
                 <button type="submit" class="btn btn-primary">Send</button>
               </form>
             </div>

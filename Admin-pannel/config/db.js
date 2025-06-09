@@ -1,12 +1,24 @@
-let mongoose = require('mongoose')
+let mongosse = require('mongoose')
 
-mongoose.connect('mongodb://localhost:27017/adminPanel');
-const db = mongoose.connection;
+mongosse.connect('mongodb://localhost:27017/adminPanel');
+const db = mongosse.connection;
 
 db.once('open', (err)=>{
-    if (err) {
-     console.log(err);
-     return false;
+    if(err){
+        console.log(err);
+        return false;
     }
-    console.log('db is connect')
+    console.log('db is connect');
+    
 })
+
+// mongoose.connect('mongodb://localhost:27017/adminPanel');
+// const db = mongoose.connection;
+
+// db.once('open', (err)=>{
+//     if (err) {
+//      console.log(err);
+//      return false;
+//     }
+//     console.log('db is connect')
+// })
