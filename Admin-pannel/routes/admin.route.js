@@ -8,5 +8,8 @@ routes.get('/' , adminctrl.dashboard);
 routes.get('/viewAdmin' , adminctrl.viewAdmin);
 routes.get('/addAdmin' , adminctrl.addAdmin);
 routes.post('/insertData' ,adminModel.uploadAdminImage , adminctrl.insertData);
+routes.get('/updateAdminDetails/:id' , adminctrl.updateAdminDetails);
+routes.post('/editData/:id',adminModel.uploadAdminImage , adminctrl.editData);
+
 
 module.exports = routes;
