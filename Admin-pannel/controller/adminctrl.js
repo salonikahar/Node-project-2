@@ -93,9 +93,7 @@ module.exports.editData = async (req, res) => {
 
             }
             return res.redirect('/admin/viewAdmin')
-        }
-    }
-        else {
+        }else {
         console.log("record not found");
         return res.redirect('/admin/viewAdmin')
     }
