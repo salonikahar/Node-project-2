@@ -1,5 +1,33 @@
 <%- include('layout/header') %>
 
+  <!-- Search Section Only -->
+
+  <nav class="layout-navbar container-xxl navbar-detached navbar navbar-expand-xl align-items-center bg-navbar-theme"
+    id="layout-navbar">
+
+    <div class="container-xxl d-flex align-items-center bg-navbar-theme p-3">
+      <div class="navbar-nav align-items-center me-auto">
+        <div class="nav-item d-flex align-items-center">
+          <span class="w-px-22 h-px-22">
+            <i class="icon-base bx bx-search icon-md"></i>
+          </span>
+          <form action="/admin/searchAdmin" class="d-flex align-items-center justify-content-center">
+            <input type="text" class="form-control border-0 shadow-none ps-1 ps-sm-2 d-md-block d-none"
+              placeholder="Search..." aria-label="Search..." name="searchAdmin" />
+            <button type="submit" class="btn btn-primary ">search</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="navbar-nav-right d-flex align-items-center justify-content-end" id="navbar-collapse">
+
+
+
+    </div>
+  </nav>
+
+
   <!-- Content wrapper -->
   <div class="content-wrapper">
     <!-- Content -->
@@ -42,7 +70,18 @@
                     <!-- <td>
                       <img src="<%= admin.profile %>" alt="" height="100px">
                     </td> -->
-                    <td><span class="badge bg-label-primary me-1">Active</span></td>
+                    <td>
+                      <!-- <% if(admin.status==true){ %>
+                        <a href="/admin/inactive/<%= admin.id %>" class="badge bg-label-primary me-1">Active</a>
+                        <% }else { %>
+                          <a href="/admin/inactive/<%= admin.id %>" class="badge bg-label-danger me-1">Inactive</a>
+                          <% } %> -->
+                      <a href="/admin/inactive/<%= admin.id %>"
+                        class="badge me-1 <%= admin.status ? 'bg-label-primary' : 'bg-label-danger' %>">
+                        <%= admin.status ? 'Active' : 'Inactive' %>
+                      </a>
+
+                    </td>
                     <td>
                       <div class="dropdown">
                         <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
@@ -51,7 +90,8 @@
                         <div class="dropdown-menu">
                           <a class="dropdown-item" href="/admin/updateAdminDetails/<%= admin.id %>"><i
                               class="icon-base bx bx-edit-alt me-1"></i> Edit</a>
-                          <a class="dropdown-item" href="javascript:void(0);"><i class="icon-base bx bx-trash me-1"></i>
+                          <a class="dropdown-item" href="/admin/deleteAdminDetails/?adminId=<%= admin.id %>"><i
+                              class="icon-base bx bx-trash me-1"></i>
                             Delete</a>
                         </div>
                       </div>

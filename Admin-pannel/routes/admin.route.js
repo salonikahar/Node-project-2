@@ -10,6 +10,13 @@ routes.get('/addAdmin' , adminctrl.addAdmin);
 routes.post('/insertData' ,adminModel.uploadAdminImage , adminctrl.insertData);
 routes.get('/updateAdminDetails/:id' , adminctrl.updateAdminDetails);
 routes.post('/editData/:id',adminModel.uploadAdminImage , adminctrl.editData);
+routes.get('/deleteAdminDetails',adminctrl.deleteAdminDetails);
+
+// soft delete
+routes.get('/inactive/:id',adminctrl.inactive);
+
+// search
+routes.get('/searchAdmin',adminctrl.searchAdmin)
 
 
 module.exports = routes;
