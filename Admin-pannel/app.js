@@ -4,6 +4,9 @@ let port = 8001;
 let path = require('path')
 let app = express();
 let db = require('./config/db')
+let cookieParser = require('cookie-parser');
+
+app.use(cookieParser())
 
 app.set('view engine','ejs');
 app.set('views' , path.join(__dirname , 'views'));

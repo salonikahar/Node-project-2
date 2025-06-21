@@ -11,9 +11,10 @@
           <span class="w-px-22 h-px-22">
             <i class="icon-base bx bx-search icon-md"></i>
           </span>
-          <form action="/admin/searchAdmin" class="d-flex align-items-center justify-content-center">
-            <input type="text" class="form-control border-0 shadow-none ps-1 ps-sm-2 d-md-block d-none"
-              placeholder="Search..." aria-label="Search..." name="searchAdmin" />
+          <form action="/admin/viewAdmin" class="d-flex align-items-center justify-content-center">
+            <input value="<%= search %>" type="text"
+              class="form-control border-0 shadow-none ps-1 ps-sm-2 d-md-block d-none" placeholder="Search..."
+              aria-label="Search..." name="searchAdmin" />
             <button type="submit" class="btn btn-primary ">search</button>
           </form>
         </div>
@@ -100,7 +101,38 @@
 
 
 
-                  <% } %>
+                  <!-- <% } %>
+                    <tr>
+                      <td colspan="6">
+                        <% for (let pagination=0; pagination<totalPage; pagination++){ %>
+                          <a href="?page=<%= pagination %>&adminSearch<%= search %>"><button>
+                              <%= pagination+1 %>
+                            </button></a>
+                          <% } %>
+                      </td>
+                    </tr> -->
+                    
+                    <td colspan="6">
+                      <% let currentPage=parseInt(page); %>
+                        <% let prevPage=currentPage - 1; %>
+                          <% let nextPage=currentPage + 1; %>
+
+                            <% if (prevPage>= 0) { %>
+                              <a href="?page=<%= prevPage %>&adminSearch=<%= search %>"><button>Prev</button></a>
+                              <% } else { %>
+                                <button disabled>Prev</button>
+                                <% } %>
+
+                                  <button >
+                                    <%= currentPage + 1 %>
+                                  </button>
+
+                                  <% if (nextPage < totalPage) { %>
+                                    <a href="?page=<%= nextPage %>&adminSearch=<%= search %>"><button>Next</button></a>
+                                    <% } else { %>
+                                      <button disabled>Next</button>
+                                      <% } %>
+                    </td>
 
             </tbody>
           </table>

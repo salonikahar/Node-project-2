@@ -5,21 +5,131 @@ const path = require('path')
 const fs = require('fs')
 const { log } = require('console')
 
+//log-in start
+
+module.exports.login = async (req, res) => {
+    try {
+        return res.render('login')
+    } catch (err) {
+        console.log(err);
+        return res.redirect('/admin/login');
+    }
+}
+
+module.exports.adminLogin = async (req, res) => {
+    try {
+        // console.log(req.body);
+        let check = await adminModel.find({ 'email': req.body.email }).countDocuments();
+        if (check == 1) {
+            let getAdminData = await adminModel.findOne({ email: req.body.email });
+            // console.log(getAdminData);
+            if (await bcrypt.compare(req.body.password, getAdminData.password)) {
+                // console.log(getAdminData);
+                // console.log('logIn sucess');
+                if (req.cookies && req.cookies.admin !== undefined) {
+                    return res.render('dashboard', { adminData: req.cookies.admin })
+                } else {
+                    return res.redirect('/admin/')
+                }
+            }
+            else {
+                console.log('Invalid Password');
+                return res.redirect('/admin/')
+            }
+        } else {
+            console.log('invalid email');
+            return res.redirect('/admin/')
+        }
+
+    } catch (err) {
+        console.log(err);
+        return res.redirect('/admin/')
+    }
+}
+
+//log-in end
+
 module.exports.dashboard = (req, res) => {
     // console.log('rich')
-    return res.render('dashboard')
+    // console.log(req.cookieS.admin);
+    if (req.cookie && req.cookies.admin !== undefined) {
+        return res.render('dashboard')
+    } else {
+        return res.redirect('/admin/')
+    }
 }
 
 module.exports.viewAdmin = async (req, res) => {
+    let page = 0;
 
-    let adminData = await adminModel.find();
-    // console.log(adminData);
+    if (req.query.page) {
+        page = req.query.page;
+    }
 
-    return res.render('viewAdmin', { adminData });
+    let search = '';
+    if (req.query.searchAdmin) {
+        search = req.query.searchAdmin;
+    }
+
+
+
+    let perPage = 3;
+    let adminData = await adminModel.find({
+        name: { $regex: search, $options: 'i' }
+    }).skip(perPage * page).limit(perPage);
+
+    let countAllAdminData = await adminModel.find({
+        name: { $regex: search, $options: 'i' }
+    }).countDocuments();
+    let totalPage = Math.ceil(countAllAdminData / perPage);
+
+    if (req.cookie && req.cookies.admin !== undefined) {
+        return res.render('viewAdmin', { adminData, totalPage, search, page });
+    } else {
+        return res.redirect('/admin/')
+    }
+}
+
+module.exports.searchAdmin = async (req, res) => {
+    try {
+        // console.log(req.query);
+
+        let search = ''
+        if (req.query && req.query.searchAdmin) {
+            search = req.query.searchAdmin;
+            // console.log(search);
+        }
+
+        let page = 0;
+        let perPage = 3;
+
+        let adminData = [];
+        if (search !== '') {
+            adminData = await adminModel.find({
+                $or: [
+                    { name: { $regex: search, $options: 'i' } },
+                    { email: { $regex: search, $options: 'i' } },
+                    { phone: { $regex: search } }
+                ]
+            }).skip(perPage * page).limit(perPage);
+
+        } else {
+            adminData = await adminModel.find(); // show all admins if no search
+        }
+        return res.render('viewAdmin', { adminData })
+
+    } catch (err) {
+        console.log(err);
+        return res.redirect('/admin/viewAdmin');
+    }
 }
 
 module.exports.addAdmin = (req, res) => {
-    return res.render('addAdmin');
+    if (req.cookie && req.cookies.admin !== undefined) {
+        return res.render('addAdmin');
+    } else {
+        return res.redirect('/admin/')
+    }
 }
 
 module.exports.insertData = async (req, res) => {
@@ -41,7 +151,7 @@ module.exports.insertData = async (req, res) => {
         let adminData = await adminModel.create(req.body);
 
         if (adminData) {
-            console.log('Data success');
+            // console.log('Data success');
         } else {
             console.log('somthing Wrong');
         }
@@ -88,7 +198,7 @@ module.exports.editData = async (req, res) => {
             }
             let editAdminData = await adminModel.findByIdAndUpdate(req.params.id, req.body);
             if (editAdminData) {
-                console.log('admin data updated');
+                // console.log('admin data updated');
             } else {
                 console.log('data not updated');
             }
@@ -121,7 +231,7 @@ module.exports.deleteAdminDetails = async (req, res) => {
 
             let deleteAdmin = await adminModel.findByIdAndDelete(oldAdminData);
             if (deleteAdmin) {
-                console.log('Delete Success');
+                // console.log('Delete Success');
             }
             else {
                 console.log('not Deleted');
@@ -150,7 +260,7 @@ module.exports.inactive = async (req, res) => {
         if (oldData) {
             let updateStatus = await adminModel.findByIdAndUpdate(id, { status: !oldData.status })
             if (updateStatus) {
-                console.log('updated');
+                // console.log('updated');
             } else {
                 console.log('not updated');
             }
@@ -165,32 +275,4 @@ module.exports.inactive = async (req, res) => {
     }
 }
 
-module.exports.searchAdmin = async (req, res) => {
-    try {
-        // console.log(req.query);
 
-        let search = ''
-        if (req.query && req.query.searchAdmin) {
-            search = req.query.searchAdmin;
-            // console.log(search);
-        }
-
-        let adminData = [];
-        if (search !== '') {
-            adminData = await adminModel.find({
-                $or: [
-                    { name: { $regex: search, $options: 'i' }},
-                    { email: { $regex: search, $options: 'i' }},
-                    { phone: { $regex: search}}
-                ]
-            });
-        } else {
-            adminData = await adminModel.find(); // show all admins if no search
-        }
-        return res.render('viewAdmin', { adminData })
-
-    } catch (err) {
-        console.log(err);
-        return res.redirect('/admin/viewAdmin');
-    }
-}
