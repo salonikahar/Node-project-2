@@ -26,11 +26,10 @@ module.exports.adminLogin = async (req, res) => {
             if (await bcrypt.compare(req.body.password, getAdminData.password)) {
                 // console.log(getAdminData);
                 // console.log('logIn sucess');
-                if (req.cookies && req.cookies.admin !== undefined) {
-                    return res.render('dashboard', { adminData: req.cookies.admin })
-                } else {
-                    return res.redirect('/admin/')
-                }
+
+                res.cookie('admin', getAdminData);
+                return res.redirect('/admin/dashboard');
+
             }
             else {
                 console.log('Invalid Password');
@@ -50,14 +49,13 @@ module.exports.adminLogin = async (req, res) => {
 //log-in end
 
 module.exports.dashboard = (req, res) => {
-    // console.log('rich')
-    // console.log(req.cookieS.admin);
-    if (req.cookie && req.cookies.admin !== undefined) {
-        return res.render('dashboard')
+    if (req.cookies.admin !== undefined) {
+        return res.render('dashboard', { adminData: req.cookies.admin });
     } else {
-        return res.redirect('/admin/')
+        return res.redirect('/admin/');
     }
-}
+};
+
 
 module.exports.viewAdmin = async (req, res) => {
     let page = 0;
@@ -74,7 +72,7 @@ module.exports.viewAdmin = async (req, res) => {
 
 
     let perPage = 3;
-    let adminData = await adminModel.find({
+    let adminList = await adminModel.find({
         name: { $regex: search, $options: 'i' }
     }).skip(perPage * page).limit(perPage);
 
@@ -83,9 +81,11 @@ module.exports.viewAdmin = async (req, res) => {
     }).countDocuments();
     let totalPage = Math.ceil(countAllAdminData / perPage);
 
-    if (req.cookie && req.cookies.admin !== undefined) {
-        return res.render('viewAdmin', { adminData, totalPage, search, page });
+    if (req.cookies.admin !== undefined) {
+        return res.render('viewAdmin', { adminList, totalPage, search, page, adminData: req.cookies.admin });
     } else {
+        console.log('err');
+
         return res.redirect('/admin/')
     }
 }
@@ -125,8 +125,8 @@ module.exports.searchAdmin = async (req, res) => {
 }
 
 module.exports.addAdmin = (req, res) => {
-    if (req.cookie && req.cookies.admin !== undefined) {
-        return res.render('addAdmin');
+    if (req.cookies.admin !== undefined) {
+        return res.render('addAdmin', { adminData: req.cookies.admin });
     } else {
         return res.redirect('/admin/')
     }
@@ -169,7 +169,7 @@ module.exports.updateAdminDetails = async (req, res) => {
         let adminId = req.params.id;
         let singleAdmin = await adminModel.findById(adminId)
         if (singleAdmin) {
-            return res.render('updateAdmin', { singleAdmin })
+            return res.render('updateAdmin', { singleAdmin, adminData: req.cookies.admin })
         } else {
             console.log('record not found.');
             return res.redirect('/admin/viewAdmin')
@@ -275,4 +275,51 @@ module.exports.inactive = async (req, res) => {
     }
 }
 
+// password-start
 
+module.exports.changePass = async (req, res) => {
+    try {
+        return res.render('changePass', { adminData: req.cookies.admin })
+    } catch (err) {
+        console.log(err);
+        return res.redirect('/admin/dashboard');
+    }
+}
+
+module.exports.changeAdminPass = async (req, res) => {
+    try {
+        // console.log(req.body);
+        let adminData = req.cookies.admin;
+        // console.log(adminData);
+        if (await bcrypt.compare(req.body.oldpass, adminData.password)) {
+            if (req.body.newpass !== req.body.oldpass) {
+                if (req.body.newpass === req.body.confrimpass) {
+                    let newPassEncrypt = await bcrypt.hash(req.body.newpass, 10);
+                    let updateAdminPass = await adminModel.findByIdAndUpdate(adminData._id, { password: newPassEncrypt });
+                    if(updateAdminPass){
+                        res.cookies.remove('admin');
+                        return res.redirect('/admin/');
+                    }else{
+                        console.log('somthing wrong');
+                        
+                    }
+                } else {
+                    console.log("please reEnter Confrim Password");
+
+                }
+            } else {
+                console.log('new password is same as old');
+
+            }
+        } else {
+            console.log('password id not match');
+
+        }
+        return res.redirect('/admin/changePass');
+
+    } catch (err) {
+        console.log(err);
+        return res.redirect('/admin/changePass');
+    }
+}
+// password-end changeAdminPass

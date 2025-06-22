@@ -6,6 +6,8 @@ let adminModel = require('../models/adminModel')
 
 routes.get('/' , adminctrl.login);
 routes.post('/adminLogin' , adminctrl.adminLogin);
+routes.get('/changePass' , adminctrl.changePass);
+routes.post('/changeAdminPass' , adminctrl.changeAdminPass);
 
 routes.get('/dashboard' , adminctrl.dashboard);
 routes.get('/viewAdmin' , adminctrl.viewAdmin);
