@@ -48,6 +48,23 @@ module.exports.adminLogin = async (req, res) => {
 
 //log-in end
 
+// log-out start
+
+module.exports.logOut = (req, res) => {
+    try {
+        res.clearCookie('admin');
+        console.log('logout suc');
+        return res.redirect('/admin/');
+    } catch (err) {
+        console.log('logout fail');
+        
+        console.log(err);
+        res.redirect('/admin/dashboard')
+    }
+}
+
+// log-out end
+
 module.exports.dashboard = (req, res) => {
     if (req.cookies.admin !== undefined) {
         return res.render('dashboard', { adminData: req.cookies.admin });
@@ -296,12 +313,12 @@ module.exports.changeAdminPass = async (req, res) => {
                 if (req.body.newpass === req.body.confrimpass) {
                     let newPassEncrypt = await bcrypt.hash(req.body.newpass, 10);
                     let updateAdminPass = await adminModel.findByIdAndUpdate(adminData._id, { password: newPassEncrypt });
-                    if(updateAdminPass){
-                        res.cookies.remove('admin');
+                    if (updateAdminPass) {
+                        res.clearCookie('admin');
                         return res.redirect('/admin/');
-                    }else{
+                    } else {
                         console.log('somthing wrong');
-                        
+
                     }
                 } else {
                     console.log("please reEnter Confrim Password");
@@ -323,3 +340,37 @@ module.exports.changeAdminPass = async (req, res) => {
     }
 }
 // password-end changeAdminPass
+
+//fotgot pass start
+
+module.exports.checkMail =async (req,res)=>{
+    try{
+        return res.render('forgot-password/checkMail')
+    }catch(err){
+        console.log(err);
+        return res.redirect('/admin/')
+        
+    }
+}
+
+module.exports.sendOtp = async(req,res)=>{
+    try{
+        // console.log(req.body);
+        let checkEmail = await adminModel.findOne({email:req.body.email});
+
+        if(checkEmail){
+
+            console.log('email right');            
+        }else{
+            console.log('email not found');            
+        }
+        return res.redirect('/admin/checkMail')
+        
+    }catch(err){
+        console.log(err);
+        return res.redirect('/admin/')
+        
+    }
+}
+
+//fotgot pass end
