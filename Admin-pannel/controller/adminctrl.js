@@ -4,6 +4,9 @@ const moment = require('moment')
 const path = require('path')
 const fs = require('fs')
 const { log } = require('console')
+const nodemailer = require('nodemailer')
+const { send } = require('process')
+
 
 //log-in start
 
@@ -57,7 +60,7 @@ module.exports.logOut = (req, res) => {
         return res.redirect('/admin/');
     } catch (err) {
         console.log('logout fail');
-        
+
         console.log(err);
         res.redirect('/admin/dashboard')
     }
@@ -343,34 +346,112 @@ module.exports.changeAdminPass = async (req, res) => {
 
 //fotgot pass start
 
-module.exports.checkMail =async (req,res)=>{
-    try{
+module.exports.checkMail = async (req, res) => {
+    try {
         return res.render('forgot-password/checkMail')
-    }catch(err){
+    } catch (err) {
         console.log(err);
         return res.redirect('/admin/')
-        
+
     }
 }
 
-module.exports.sendOtp = async(req,res)=>{
-    try{
-        // console.log(req.body);
-        let checkEmail = await adminModel.findOne({email:req.body.email});
+function genrateOTP() {
+    let otp = Math.round(Math.random() * 1000000).toString();
 
-        if(checkEmail){
+    if (otp.length == 6) {
+        return newOTP = otp;
+    } else {
+        genrateOTP();
+    }
+}
 
-            console.log('email right');            
-        }else{
-            console.log('email not found');            
+async function sendOtp(email, res) {
+    let checkEmail = await adminModel.findOne({ email: email });
+
+    if (!checkEmail) {
+        console.log('email not found');
+        return { success: false, message: 'Email not registered' };
+    }
+
+    let otp = genrateOTP();
+    res.cookie('otp', otp)
+    res.cookie('email', email)
+
+    // console.log(req.body.email);
+    // console.log('email right'); 
+    const transporter = nodemailer.createTransport({
+        host: "smtp.gmail.com",
+        port: 587,
+        secure: false, // true for 465, false for other ports
+        auth: {
+            user: '7018salonikahar@gmail.com',
+            pass: "sphalbrvbofywepp",
+        },
+    });
+    try {
+        const info = await transporter.sendMail({
+            from: '7018salonikahar@gmail.com',
+            to: email,
+            subject: "Your OTP is here...",
+            text: "OTP", // plain‑text body
+            html: `<b>OTP : ${otp}</b>`, // HTML body
+        });
+        return { success: true };
+    } catch (err) {
+        console.error('sendOtp error:', err);
+        return { success: false, message: err.message };
+    }
+}
+
+
+
+module.exports.sendOtp = async (req, res) => {
+        try {
+            let response = await sendOtp(req.body.email, res);
+
+            if (response.success) {
+                return res.redirect('/admin/otpPage');
+            } else {
+                console.log(response.false);
+                return res.redirect('/admin/checkMail');
+            }
+
+        } catch (err) {
+            console.log(err);
+            return res.redirect('/admin/')
+
         }
-        return res.redirect('/admin/checkMail')
-        
-    }catch(err){
-        console.log(err);
-        return res.redirect('/admin/')
-        
     }
-}
+
+    // 
+
+    module.exports.ResendOtp = async (req, res) => {
+        try {
+            const email = req.cookies.email;
+            if (!email) return res.redirect('/admin/');
+
+            const response = await sendOtp(email, res);
+            if (response.success) {
+                return res.redirect('/admin/otpPage');
+            }
+            console.error('OTP send failed:', response.message);
+            return res.redirect('/admin/checkMail');
+
+        } catch (err) {
+            console.error('ResendOtp catch:', err);
+            return res.redirect('/admin/');
+        }
+    }
+
+
+    module.exports.otpPage = (req, res) => {
+        try {
+            return res.render('forgot-password/otpPage');
+        } catch (err) {
+            console.log('can not genrate otp page');
+            return res.redirect('/admin/checkMail')
+        }
+    }
 
 //fotgot pass end
