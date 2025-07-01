@@ -1,0 +1,79 @@
+<% for (var admin of adminList) { %>
+    <div class="modal fade" id="modal_<%= admin._id %>" tabindex="-1" aria-labelledby="modalLabel_<%= admin._id %>"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                    <!-- Profile Image -->
+                    <div class="text-center mb-4">
+                        <img src="<%= admin.profile %>" alt="Profile Image" class="img-fluid rounded-circle"
+                            style="width: 150px; height: 150px; object-fit: cover; border: 3px solid #f0f0f0;">
+                    </div>
+
+                    <!-- Admin Info Table -->
+                    <table class="table table-bordered text-center align-middle">
+                        <tbody>
+                            <tr>
+                                <th>Name</th>
+                                <td>
+                                    <%= admin.name %>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Email</th>
+                                <td>
+                                    <%= admin.email %>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Phone</th>
+                                <td>
+                                    <%= admin.phone %>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Gender</th>
+                                <td>
+                                    <%= admin.gender || '-' %>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Hobby</th>
+                                <td>
+                                    <%= admin.hobby || '-' %>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>City</th>
+                                <td>
+                                    <%= admin.city || '-' %>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Description</th>
+                                <td>
+                                    <%= admin.description || '-' %>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <!-- <hr class="my-4"> -->
+                    <div class="d-flex justify-content-center gap-3 mt-3">
+                        <a href="/admin/updateAdminDetails/<%= admin.id %>"><button
+                                class="btn btn-sm btn-outline-primary"><i class="bx bx-edit-alt me-1"></i> Edit
+                                Profile</button></a>
+                        <a href="/admin/deleteAdminDetails/?adminId=<%= admin.id %>"><button
+                                class="btn btn-sm btn-outline-danger"><i class="bx bx-trash me-1"></i>
+                                Delete</button></a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <% } %>

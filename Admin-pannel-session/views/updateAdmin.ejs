@@ -1,0 +1,109 @@
+<%- include('layout/header') %>
+
+  <!-- Content wrapper -->
+  <div class="content-wrapper">
+    <!-- Content -->
+    <div class="container-xxl flex-grow-1 container-p-y">
+      <!-- Basic Layout -->
+      <div class="row mb-6 gy-6">
+        <div class="col-xl">
+          <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+              <h5 class="mb-0">Basic Layout</h5>
+              <small class="text-body float-end">Default label</small>
+            </div>
+            <div class="card-body">
+              <form method="post" action="/admin/editData/<%= singleAdmin.id %>" enctype="multipart/form-data">
+                <div class="mb-6">
+                    <% var name= singleAdmin.name.split(' ') %>
+                  <label class="form-label " for="basic-default-fullname">First Name</label>
+                  <input type="text" class="form-control" id="basic-default-fullname" placeholder="John"
+                    name="firstName" value="<%= name[0] %>" />
+                </div>
+                <div class="mb-6">
+                  <label class="form-label" for="basic-default-fullname">Last Name</label>
+                  <input type="text" class="form-control" id="basic-default-fullname" placeholder="Doe"
+                    name="lastName" value="<%= name[1] %>" />
+                </div>
+
+                <div class="mb-6">
+                  <label class="form-label" for="basic-default-email">Email</label>
+                  <div class="input-group input-group-merge">
+                    <input name="email" type="text" id="basic-default-email" class="form-control" placeholder="john.doe"
+                      aria-label="john.doe" aria-describedby="basic-default-email2" value="<%= singleAdmin.email %>" />
+                    <span class="input-group-text" id="basic-default-email2">@example.com</span>
+                  </div>
+                  <div class="form-text">You can use letters, numbers & periods</div>
+                </div>
+                <div class="mb-6">
+                  <label class="form-label" for="basic-default-phone">Phone No</label>
+                  <input name="phone" type="text" id="basic-default-phone" class="form-control phone-mask"
+                    placeholder="658 799 8941" value="<%= singleAdmin.phone %>" />
+                </div>
+               
+
+                <div class="mb-6">
+                  <label for="exampleFormControlSelect1" class="form-label">City</label>
+                  <select class="form-select" id="exampleFormControlSelect1" aria-label="Default select example"
+                    name="city" value="<%= singleAdmin.city %>" >
+                    <option selected disabled>Open this select menu</option>
+                    <% let city=['surat', 'baroda' , 'rajkot' ]; %>
+                      <% city.forEach((v)=> { %>
+                        <option value="<%= v %>" <% if(singleAdmin.city== v){ %> <%= 'selected' %> <% } %>  >
+                          <%= v %>
+                        </option>
+                        <% }) %>
+                  </select>
+                </div>
+
+
+                <!-- check -->
+
+                <div class=" mb-6">
+                  <span class="form-label d-block">Hobby</span>
+                  <div class="form-check form-check-inline ">
+                    <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="coding" name="hobby" <% if(singleAdmin.hobby == 'coding' ){ %> <%= 'checked' %> <% } %>  />
+                    <label class="form-check-label" for="inlineCheckbox1">coding</label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="advanture"
+                      name="hobby" <% if(singleAdmin.hobby == 'advanture' ){ %> <%= 'checked' %> <% } %> />
+                    <label class="form-check-label" for="inlineCheckbox2">advanture</label>
+                  </div>
+
+                </div>
+                <div class="mb-6 ">
+                  <span class="form-label d-block">Gender</span>
+                  <div class="form-check form-check-inline ">
+                    <input class="form-check-input" type="radio" name="gender" id="inlineRadio1" value="male" <% if(singleAdmin.gender == 'male' ){ %> <%= 'checked' %> <% } %>  />
+                    <label class="form-check-label" for="inlineRadio1">Male</label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="gender" id="inlineRadio2" value="female" <% if(singleAdmin.gender == 'female' ){ %> <%= 'checked' %> <% } %> />
+                    <label class="form-check-label" for="inlineRadio2">Female</label>
+                  </div>
+
+                </div>
+
+                <div class="mb-6">
+                  <label class="form-label" for="basic-default-message">Description</label>
+                  <textarea id="basic-default-message" class="form-control"
+                    placeholder="Hi, Do you have a moment to talk Joe?" name="description" ><%= singleAdmin.description %></textarea>
+                </div>
+                <div class="mb-6">
+                  <label for="formFile" class="form-label">Upload your Profile here</label>
+                  <!-- <%= singleAdmin.profile %> -->
+                   <img src="<%= singleAdmin.profile %>" alt="" height="100">
+                  <input class="form-control" type="file" id="formFile" name="profile" />
+                </div>
+                <button type="submit" class="btn btn-primary">Edit</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- / Content -->
+
+
+    <%- include('layout/footer') %>
