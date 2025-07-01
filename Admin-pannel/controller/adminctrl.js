@@ -375,6 +375,11 @@ async function sendOtp(email, res) {
     }
 
     let otp = genrateOTP();
+
+    if(otp === undefined){
+         otp = genrateOTP();
+    }
+    res.clearCookie('otp');
     res.cookie('otp', otp)
     res.cookie('email', email)
 
@@ -407,51 +412,116 @@ async function sendOtp(email, res) {
 
 
 module.exports.sendOtp = async (req, res) => {
-        try {
-            let response = await sendOtp(req.body.email, res);
+    try {
+        let response = await sendOtp(req.body.email, res);
 
-            if (response.success) {
-                return res.redirect('/admin/otpPage');
-            } else {
-                console.log(response.false);
-                return res.redirect('/admin/checkMail');
-            }
-
-        } catch (err) {
-            console.log(err);
-            return res.redirect('/admin/')
-
-        }
-    }
-
-    // 
-
-    module.exports.ResendOtp = async (req, res) => {
-        try {
-            const email = req.cookies.email;
-            if (!email) return res.redirect('/admin/');
-
-            const response = await sendOtp(email, res);
-            if (response.success) {
-                return res.redirect('/admin/otpPage');
-            }
-            console.error('OTP send failed:', response.message);
+        if (response.success) {
+            return res.redirect('/admin/otpPage');
+        } else {
+            console.log(response.false);
             return res.redirect('/admin/checkMail');
-
-        } catch (err) {
-            console.error('ResendOtp catch:', err);
-            return res.redirect('/admin/');
         }
+
+    } catch (err) {
+        console.log(err);
+        return res.redirect('/admin/')
+
+    }
+}
+
+// 
+
+module.exports.ResendOtp = async (req, res) => {
+    try {
+        let email = req.cookies.email;
+        if (!email) return res.redirect('/admin/');
+
+        const response = await sendOtp(email, res);
+        if (response.success) {
+            return res.redirect('/admin/otpPage');
+        }
+        console.error('OTP send failed:', response.message);
+        return res.redirect('/admin/checkMail');
+
+    } catch (err) {
+        console.error('ResendOtp catch:', err);
+        return res.redirect('/admin/');
+    }
+}
+
+
+module.exports.otpPage = async (req, res) => {
+    try {
+        const email = req.cookies.email;
+        if (!email) return res.redirect('/admin/');
+        return res.render('forgot-password/otpPage');
+    } catch (err) {
+        console.log('can not genrate otp page');
+        return res.redirect('/admin/checkMail')
+    }
+}
+
+module.exports.verifyOtp = async (req, res) => {
+    try {
+        
+        console.log(req.body);
+        let cookieOtp = req.cookies.otp;
+        if (cookieOtp == req.body.otp) {
+            // console.log('okay');
+            return res.redirect('/admin/changePassword')
+        } else {
+            console.log('otp not match.');
+            return res.redirect('/admin/otpPage')
+        }
+
+    } catch (err) {
+        console.log(err);
+
+        return res.redirect('/admin/otpPage')
+
+    }
+}
+
+module.exports.changePassword = async (req, res) => {
+    try {
+        const email = req.cookies.email;
+        if (!email) return res.redirect('/admin/');
+        res.render('forgot-password/changePassword')
+    } catch (err) {
+        console.log(err);
+        return res.redirect('/admin/otpPage')
+    }
+}
+
+module.exports.updateChangePass = async (req, res) => {
+  try {
+    // console.log(req.body);
+    if (req.body.newpass == req.body.confrimpass) {
+      let emailCookie = req.cookies.email;
+
+      let adminData = await adminModel.findOne({ email: emailCookie });
+      let encryptPass = await bcrypt.hash(req.body.newpass, 10);
+      let UpdatePass = await adminModel.findByIdAndUpdate(adminData._id, { password: encryptPass });
+
+      if (UpdatePass) {
+        res.clearCookie('email'); 
+        res.clearCookie('otp'); 
+        res.clearCookie('admin'); 
+        return res.redirect('/admin/'); 
+      } else {
+        console.log('password is not stored');
+        return res.redirect('/admin/changePassword');
+      }
+    } else {
+      console.log('password is not match');
+      return res.redirect('/admin/changePassword');
     }
 
+  } catch (err) {
+    console.log(err);
+    return res.redirect('/admin/changePassword');
+  }
+};
 
-    module.exports.otpPage = (req, res) => {
-        try {
-            return res.render('forgot-password/otpPage');
-        } catch (err) {
-            console.log('can not genrate otp page');
-            return res.redirect('/admin/checkMail')
-        }
-    }
 
 //fotgot pass end

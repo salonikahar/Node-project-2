@@ -15,6 +15,9 @@ routes.get('/checkMail',adminctrl.checkMail)
 routes.post('/sendOtp',adminctrl.sendOtp)
 routes.post('/ResendOtp',adminctrl.ResendOtp)
 routes.get('/otpPage',adminctrl.otpPage);
+routes.post('/verifyOtp',adminctrl.verifyOtp);
+routes.get('/changePassword',adminctrl.changePassword);
+routes.post('/updateChangePass',adminctrl.updateChangePass)
 
 
 routes.get('/dashboard' , adminctrl.dashboard);

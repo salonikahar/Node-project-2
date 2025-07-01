@@ -17,6 +17,7 @@
         timerText.innerText = "";
       }
     }, 1000);
+    
   }
 
   // Initial 2-minute wait
@@ -24,9 +25,8 @@
 
   // When user clicks "Resend OTP"
   resendBtn.addEventListener("click", function () {
-    // You may want to trigger an actual resend via AJAX here
     console.log("OTP Resent!");
 
-    // Hide button and restart timer
+    
     startResendTimer(10);
   });
