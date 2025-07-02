@@ -464,7 +464,7 @@ module.exports.otpPage = async (req, res) => {
 module.exports.verifyOtp = async (req, res) => {
     try {
         
-        console.log(req.body);
+        // console.log(req.body);
         let cookieOtp = req.cookies.otp;
         if (cookieOtp == req.body.otp) {
             // console.log('okay');
