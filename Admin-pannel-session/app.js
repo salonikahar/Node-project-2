@@ -26,6 +26,9 @@ app.use(session({
       maxAge: 1000*60*10000
    }
 }))
+
+app.use(passport.initialize())
+app.use(pas)
 app.use('/', require('./routes'))
 
 
