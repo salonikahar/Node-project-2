@@ -1,0 +1,97 @@
+<%- include('../layout/header') %>
+
+  <!-- Search Section Only -->
+
+  <nav class="layout-navbar container-xxl navbar-detached navbar navbar-expand-xl align-items-center bg-navbar-theme"
+    id="layout-navbar">
+
+    <div class="container-xxl d-flex align-items-center bg-navbar-theme p-3">
+      <div class="navbar-nav align-items-center me-auto">
+        <div class="nav-item d-flex align-items-center">
+          <span class="w-px-22 h-px-22">
+            <i class="icon-base bx bx-search icon-md"></i>
+          </span>
+          
+        </div>
+      </div>
+    </div>
+
+    <div class="navbar-nav-right d-flex align-items-center justify-content-end" id="navbar-collapse">
+
+
+
+    </div>
+  </nav>
+
+
+  <!-- Content wrapper -->
+  <div class="content-wrapper">
+    <!-- Content -->
+    <div class="container-xxl flex-grow-1 container-p-y">
+      <!-- Basic Bootstrap Table -->
+      <div class="card">
+        <h5 class="card-header">Table Basic</h5>
+        <div class="table-responsive text-nowrap">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>NO</th>
+                <th>Category</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody class="table-border-bottom-0">
+
+              <% let i=1 %>
+                <% for(var cate of categoryData) { %>
+                  <tr>
+
+                    <td data-bs-toggle="modal" data-bs-target="#modal_<%= cate._id %>" style="cursor:pointer;">
+                      <%= i++ %>
+                    </td>
+                    <td data-bs-toggle="modal" data-bs-target="#modal_<%= cate._id %>" style="cursor:pointer;">
+                      <%= cate.name %>
+                    </td>
+                    <td>  
+                      <a href="/cate/inactive/<%= cate.id %>"
+                        class="badge me-1 <%= cate.status ? 'bg-label-primary' : 'bg-label-danger' %>">
+                        <%= cate.status ? 'Active' : 'Inactive' %>
+                      </a>
+
+                    </td>
+                    <td>
+                      <div class="dropdown">
+                        <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                          <i class="icon-base bx bx-dots-vertical-rounded"></i>
+                        </button>
+                        <div class="dropdown-menu">
+                          <a class="dropdown-item"><i
+                              class="icon-base bx bx-edit-alt me-1"></i> Edit</a>
+                          <a class="dropdown-item" ><i
+                              class="icon-base bx bx-trash me-1"></i>
+                            Delete</a>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+
+
+
+                 
+                    
+                    
+
+            </tbody>
+          </table>
+
+
+        </div>
+      </div>
+      <!--/ Basic Bootstrap Table -->
+
+    </div>
+    <!-- / Content -->
+
+
+    <%- include('../layout/footer') %>

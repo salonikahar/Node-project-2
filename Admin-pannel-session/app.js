@@ -28,7 +28,9 @@ app.use(session({
 }))
 
 app.use(passport.initialize())
-app.use(pas)
+app.use(passport.session())
+app.use(passport.setUser)
+
 app.use('/', require('./routes'))
 
 

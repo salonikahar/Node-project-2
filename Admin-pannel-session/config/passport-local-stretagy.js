@@ -5,7 +5,7 @@ const bcrypt = require('bcrypt');
 const admin = require('../models/adminModel');
 
 
-passport.use(new localStrategy({
+passport.use('admin',new localStrategy({
     usernameField: 'email'
 }, async function (email, password, done) {
     let adminData = await adminModel.findOne({ email: email })
@@ -32,5 +32,20 @@ passport.deserializeUser(async function (id , done){
         return done(null,false)
     }
 })
+
+passport.AuthUser = function(req,res,next){
+    if (req.isAuthenticated()){
+        next();
+    }else{
+        return res.redirect('/admin/')
+    }
+}
+
+passport.setUser = function(req,res,next){
+    if(req.isAuthenticated()){
+        res.locals.user = req.user
+    }
+    next();
+}
 
 module.exports = passport;

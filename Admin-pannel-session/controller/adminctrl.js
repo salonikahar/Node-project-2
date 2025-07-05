@@ -21,27 +21,9 @@ module.exports.login = async (req, res) => {
 
 module.exports.adminLogin = async (req, res) => {
     try {
-        // console.log(req.body);
-        let check = await adminModel.find({ 'email': req.body.email }).countDocuments();
-        if (check == 1) {
-            let getAdminData = await adminModel.findOne({ email: req.body.email });
-            // console.log(getAdminData);
-            if (await bcrypt.compare(req.body.password, getAdminData.password)) {
-                // console.log(getAdminData);
-                // console.log('logIn sucess');
 
-                res.cookie('admin', getAdminData);
-                return res.redirect('/admin/dashboard');
+        return res.redirect('/admin/dashboard');
 
-            }
-            else {
-                console.log('Invalid Password');
-                return res.redirect('/admin/')
-            }
-        } else {
-            console.log('invalid email');
-            return res.redirect('/admin/')
-        }
 
     } catch (err) {
         console.log(err);
@@ -51,26 +33,11 @@ module.exports.adminLogin = async (req, res) => {
 
 //log-in end
 
-// log-out start
 
-module.exports.logOut = (req, res) => {
-    try {
-        res.clearCookie('admin');
-        console.log('logout suc');
-        return res.redirect('/admin/');
-    } catch (err) {
-        console.log('logout fail');
-
-        console.log(err);
-        res.redirect('/admin/dashboard')
-    }
-}
-
-// log-out end
-
-module.exports.dashboard = (req, res) => {
-    if (req.cookies.admin !== undefined) {
-        return res.render('dashboard', { adminData: req.cookies.admin });
+module.exports.dashboard = async (req, res) => {
+    if (req.isAuthenticated()) {
+        let adminList = await adminModel.find();
+        return res.render('dashboard', { admin: req.user });
     } else {
         return res.redirect('/admin/');
     }
@@ -78,35 +45,37 @@ module.exports.dashboard = (req, res) => {
 
 
 module.exports.viewAdmin = async (req, res) => {
-    let page = 0;
+    try {
+        let page = 0;
 
-    if (req.query.page) {
-        page = req.query.page;
-    }
+        if (req.query.page) {
+            page = req.query.page;
+        }
 
-    let search = '';
-    if (req.query.searchAdmin) {
-        search = req.query.searchAdmin;
-    }
+        let search = '';
+        if (req.query.searchAdmin) {
+            search = req.query.searchAdmin;
+        }
 
+        let perPage = 3;
+        let adminList = await adminModel.find({
+            name: { $regex: search, $options: 'i' }
+        }).skip(perPage * page).limit(perPage);
 
+        let countAllAdminData = await adminModel.find({
+            name: { $regex: search, $options: 'i' }
+        }).countDocuments();
+        let totalPage = Math.ceil(countAllAdminData / perPage);
 
-    let perPage = 3;
-    let adminList = await adminModel.find({
-        name: { $regex: search, $options: 'i' }
-    }).skip(perPage * page).limit(perPage);
-
-    let countAllAdminData = await adminModel.find({
-        name: { $regex: search, $options: 'i' }
-    }).countDocuments();
-    let totalPage = Math.ceil(countAllAdminData / perPage);
-
-    if (req.cookies.admin !== undefined) {
-        return res.render('viewAdmin', { adminList, totalPage, search, page, adminData: req.cookies.admin });
-    } else {
-        console.log('err');
-
-        return res.redirect('/admin/')
+        if (req.isAuthenticated()) {
+            return res.render('viewAdmin', { adminList, totalPage, search, page, adminData: req.user });
+        } else {
+            console.log('err');
+            return res.redirect('/admin/dashboard')
+        }
+    } catch (err) {
+        console.log(err);
+        return res.redirect('/admin/dashboard')
     }
 }
 
@@ -136,7 +105,7 @@ module.exports.searchAdmin = async (req, res) => {
         } else {
             adminData = await adminModel.find(); // show all admins if no search
         }
-        return res.render('viewAdmin', { adminData })
+        return res.render('viewAdmin', { adminData: req.user })
 
     } catch (err) {
         console.log(err);
@@ -145,10 +114,11 @@ module.exports.searchAdmin = async (req, res) => {
 }
 
 module.exports.addAdmin = (req, res) => {
-    if (req.cookies.admin !== undefined) {
-        return res.render('addAdmin', { adminData: req.cookies.admin });
+    if (req.isAuthenticated()) {
+        return res.render('addAdmin', { adminData: req.user });
     } else {
-        return res.redirect('/admin/')
+        console.log("error");
+        return res.redirect('/admin/');
     }
 }
 
@@ -376,8 +346,8 @@ async function sendOtp(email, res) {
 
     let otp = genrateOTP();
 
-    if(otp === undefined){
-         otp = genrateOTP();
+    if (otp === undefined) {
+        otp = genrateOTP();
     }
     res.clearCookie('otp');
     res.cookie('otp', otp)
@@ -463,7 +433,7 @@ module.exports.otpPage = async (req, res) => {
 
 module.exports.verifyOtp = async (req, res) => {
     try {
-        
+
         // console.log(req.body);
         let cookieOtp = req.cookies.otp;
         if (cookieOtp == req.body.otp) {
@@ -494,33 +464,33 @@ module.exports.changePassword = async (req, res) => {
 }
 
 module.exports.updateChangePass = async (req, res) => {
-  try {
-    // console.log(req.body);
-    if (req.body.newpass == req.body.confrimpass) {
-      let emailCookie = req.cookies.email;
+    try {
+        // console.log(req.body);
+        if (req.body.newpass == req.body.confrimpass) {
+            let emailCookie = req.cookies.email;
 
-      let adminData = await adminModel.findOne({ email: emailCookie });
-      let encryptPass = await bcrypt.hash(req.body.newpass, 10);
-      let UpdatePass = await adminModel.findByIdAndUpdate(adminData._id, { password: encryptPass });
+            let adminData = await adminModel.findOne({ email: emailCookie });
+            let encryptPass = await bcrypt.hash(req.body.newpass, 10);
+            let UpdatePass = await adminModel.findByIdAndUpdate(adminData._id, { password: encryptPass });
 
-      if (UpdatePass) {
-        res.clearCookie('email'); 
-        res.clearCookie('otp'); 
-        res.clearCookie('admin'); 
-        return res.redirect('/admin/'); 
-      } else {
-        console.log('password is not stored');
+            if (UpdatePass) {
+                res.clearCookie('email');
+                res.clearCookie('otp');
+                res.clearCookie('admin');
+                return res.redirect('/admin/');
+            } else {
+                console.log('password is not stored');
+                return res.redirect('/admin/changePassword');
+            }
+        } else {
+            console.log('password is not match');
+            return res.redirect('/admin/changePassword');
+        }
+
+    } catch (err) {
+        console.log(err);
         return res.redirect('/admin/changePassword');
-      }
-    } else {
-      console.log('password is not match');
-      return res.redirect('/admin/changePassword');
     }
-
-  } catch (err) {
-    console.log(err);
-    return res.redirect('/admin/changePassword');
-  }
 };
 
 
