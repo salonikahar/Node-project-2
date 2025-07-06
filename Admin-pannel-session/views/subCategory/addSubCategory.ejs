@@ -1,0 +1,81 @@
+<%- include('../layout/header') %>
+
+  <!-- Content wrapper -->
+  <div class="content-wrapper">
+    <!-- Content -->
+    <div class="container-xxl flex-grow-1 container-p-y">
+      <!-- Basic Layout -->
+      <div class="row mb-6 gy-6">
+        <div class="col-xl">
+          <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+              <h5 class="mb-0">Basic Layout</h5>
+              <small class="text-body float-end">Default label</small>
+            </div>
+            <div class="card-body">
+              <form method="post" action="/admin/subCategory/insertSubCategoryData" enctype="multipart/form-data">
+
+                <div class="mb-6">
+                  <label for="exampleFormControlSelect1" class="form-label">Category</label>
+                  <select class="form-select" id="exampleFormControlSelect1" aria-label="Default select example"
+                    name="categoryId">
+                    <option selected >Open this select Category</option>
+
+                    <% categoryData.map((v,i)=>{ %>
+                      <option value="<%= v.id %>" ><%= v.category %></option>
+                      <% }) %>
+                  </select>
+                </div>
+
+
+                <div class="mb-6">
+                  <label class="form-label " for="basic-default-fullname">Title</label>
+                  <input type="text" class="form-control" id="basic-default-fullname" placeholder="latest news.."
+                    name="title" />
+                </div>
+                <div class="mb-6">
+                  <label class="form-label" for="basic-default-message">Description</label>
+                  <textarea id="basic-default-message" class="form-control"
+                    placeholder="Hi, Do you have a moment to talk Joe?" name="description"></textarea>
+                </div>
+
+                <div class="mb-6">
+                  <label for="formFile" class="form-label">Upload your poster here</label>
+                  <input class="form-control" type="file" id="formFile" name="poster" />
+                </div>
+                <button type="submit" class="btn btn-primary">Send</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- / Content -->
+
+
+    <%- include('../layout/footer') %>
+
+    <!-- Place the first <script> tag in your HTML's <head> -->
+<script src="https://cdn.tiny.cloud/1/26upy1bhijz2ewlwkxifxcmpqzi6y5j7xe5ltu9bc23oirlk/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
+
+<!-- Place the following <script> and <textarea> tags your HTML's <body> -->
+<script>
+  tinymce.init({
+    selector: 'textarea',
+    plugins: [
+      // Core editing features
+      'anchor', 'autolink', 'charmap', 'codesample', 'emoticons', 'image', 'link', 'lists', 'media', 'searchreplace', 'table', 'visualblocks', 'wordcount',
+      // Your account includes a free trial of TinyMCE premium features
+      // Try the most popular premium features until Jul 21, 2025:
+      'checklist', 'mediaembed', 'casechange', 'formatpainter', 'pageembed', 'a11ychecker', 'tinymcespellchecker', 'permanentpen', 'powerpaste', 'advtable', 'advcode', 'editimage', 'advtemplate', 'ai', 'mentions', 'tinycomments', 'tableofcontents', 'footnotes', 'mergetags', 'autocorrect', 'typography', 'inlinecss', 'markdown','importword', 'exportword', 'exportpdf'
+    ],
+    toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+    tinycomments_mode: 'embedded',
+    tinycomments_author: 'Author name',
+    mergetags_list: [
+      { value: 'First.Name', title: 'First Name' },
+      { value: 'Email', title: 'Email' },
+    ],
+    ai_request: (request, respondWith) => respondWith.string(() => Promise.reject('See docs to implement AI Assistant')),
+  });
+</script>

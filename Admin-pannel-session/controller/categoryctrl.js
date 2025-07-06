@@ -6,28 +6,28 @@ module.exports.addCategory = async (req, res) => {
 }
 
 module.exports.insertCategoryData = async (req, res) => {
-    console.log(req.body);
+    // console.log(req.body);
     req.body.created_date = moment().format('DD/MM/YYYY,h:mm:ss a');
     req.body.updated_date = moment().format('DD/MM/YYYY,h:mm:ss a');
 
     let addCategory = await categoryModel.create(req.body);
-    if(addCategory){
+    if (addCategory) {
         return res.redirect('/admin/category/addCategory')
-    }else{
+    } else {
         console.log('error');
         return res.redirect('/admin/category/addCategory')
-        
+
     }
 }
 
-module.exports.viewCategory = async (req,res)=>{
-    try{
-    let categoryData = await categoryModel.find();
-    
-    return res.render('category/viewCategory',{ admin: req.user , categoryData})
+module.exports.viewCategory = async (req, res) => {
+    try {
+        let categoryData = await categoryModel.find();
 
-    }catch(err){
+        return res.render('category/viewCategory', { admin: req.user, categoryData })
+
+    } catch (err) {
         console.log(err);
-        return res.redirect('/admin/dashboard')
+        return res.redirect('/admin/dashboard');
     }
 }

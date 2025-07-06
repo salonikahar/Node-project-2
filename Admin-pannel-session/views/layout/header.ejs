@@ -140,7 +140,9 @@
             </ul>
           </li>
           <!-- Admin-end -->
-            <li class="menu-item">
+
+          <!-- category-start-->
+          <li class="menu-item">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
               <i class="menu-icon tf-icons bx bx-detail"></i>
               <div class="text-truncate" data-i18n="Form Elements">Category</div>
@@ -158,11 +160,28 @@
               </li>
             </ul>
           </li>
-          <!-- category-start-->
-
-
-
           <!-- category-end-->
+
+          <!-- subcategory-start-->
+          <li class="menu-item">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+              <i class="menu-icon tf-icons bx bx-detail"></i>
+              <div class="text-truncate" data-i18n="Form Elements">SubCategory</div>
+            </a>
+            <ul class="menu-sub">
+              <li class="menu-item">
+                <a href="/admin/category/viewSubCategory" class="menu-link">
+                  <div class="text-truncate" data-i18n="Basic Inputs">view SubCategory</div>
+                </a>
+              </li>
+              <li class="menu-item">
+                <a href="/admin/subCategory/addSubCategory" class="menu-link">
+                  <div class="text-truncate" data-i18n="Input groups">Add SubCategory</div>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <!-- subcategory-end-->
         </ul>
       </aside>
       <!-- / Menu -->
@@ -236,11 +255,11 @@
                     <a class="dropdown-item" href="/admin/changePass">
                       <span class="d-flex align-items-center align-middle">
                         <i class="flex-shrink-0 icon-base bx bx-credit-card icon-md me-3"></i>
-                       
+
                         <span class="flex-grow-1 align-middle">
-                            Change password
-                          </span>
-                        
+                          Change password
+                        </span>
+
 
                       </span>
                     </a>

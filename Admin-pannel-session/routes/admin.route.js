@@ -51,4 +51,7 @@ routes.get('/searchAdmin', adminctrl.searchAdmin);
 //category
 routes.use('/category',require('./category.routes'))
 
+//subcategory
+routes.use('/subCategory',require('./subCategory.routes'))
+
 module.exports = routes;
