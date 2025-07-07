@@ -37,6 +37,7 @@
               <tr>
                 <th>NO</th>
                 <th>Category</th>
+                <th>title</th>
                 <th>Status</th>
                 <th>Actions</th>
               </tr>
@@ -44,19 +45,22 @@
             <tbody class="table-border-bottom-0">
 
               <% let i=1 %>
-                <% for(var cate of categoryData) { %>
+                <% for(var SubCategory of subCategoryData) { %>
                   <tr>
 
-                    <td data-bs-toggle="modal" data-bs-target="#modal_<%= cate._id %>" style="cursor:pointer;">
+                    <td data-bs-toggle="modal" data-bs-target="#modal_<%= SubCategory._id %>" style="cursor:pointer;">
                       <%= i++ %>
                     </td>
-                    <td data-bs-toggle="modal" data-bs-target="#modal_<%= cate._id %>" style="cursor:pointer;">
-                      <%= cate.category %>
+                    <td data-bs-toggle="modal" data-bs-target="#modal_<%= SubCategory._id %>" style="cursor:pointer;">
+                      <%= SubCategory.categoryId.category %>
+                    </td>
+                    <td data-bs-toggle="modal" data-bs-target="#modal_<%= SubCategory._id %>" style="cursor:pointer;">
+                      <%= SubCategory.title %>
                     </td>
                     <td>  
-                      <a href="/cate/inactive/<%= cate.id %>"
-                        class="badge me-1 <%= cate.status ? 'bg-label-primary' : 'bg-label-danger' %>">
-                        <%= cate.status ? 'Active' : 'Inactive' %>
+                      <a href="/SubCategory/inactive/<%= SubCategory.id %>"
+                        class="badge me-1 <%= SubCategory.status ? 'bg-label-primary' : 'bg-label-danger' %>">
+                        <%= SubCategory.status ? 'Active' : 'Inactive' %>
                       </a>
 
                     </td>

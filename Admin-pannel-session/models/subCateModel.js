@@ -52,5 +52,5 @@ let blogStorage = multer.diskStorage({
 subCategoryModel.statics.uploadBlogImage = multer({storage : blogStorage}).single('poster');
 subCategoryModel.statics.blogImage = blogImage;
 
-const subCategory = mongoose.model('subCcategory', subCategoryModel);
+const subCategory = mongoose.model('subCategory', subCategoryModel);
 module.exports = subCategory;

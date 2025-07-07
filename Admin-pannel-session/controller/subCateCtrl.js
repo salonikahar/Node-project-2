@@ -24,10 +24,10 @@ module.exports.insertSubCategoryData = async (req, res) => {
         let subCategoryData = await subCategoryModel.create(req.body);
         if (subCategoryData) {
             console.log('done');
-            return res.redirect('/admin/subCategory')
+            return res.redirect('/admin/subCategory/viewSubCategory')
         } else {
             console.log('error to add sub category');
-            return res.redirect('/admin/subCategory')
+            return res.redirect('/admin/subCategory/viewSubCategory')
 
         }
 
@@ -37,3 +37,15 @@ module.exports.insertSubCategoryData = async (req, res) => {
     }
 }
 
+module.exports.viewSubCategory = async (req, res) => {
+    try {
+        let subCategoryData = await subCategoryModel.find().populate('categoryId').exec();
+        console.log(subCategoryData);
+        
+        return res.render('subCategory/viewSubCategory', { admin: req.user, subCategoryData })
+
+    } catch (err) {
+        console.log(err);
+        return res.redirect('/admin/dashboard');
+    }
+}

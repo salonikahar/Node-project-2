@@ -10,10 +10,10 @@ routes.get('/', adminctrl.login);
 
 routes.get('/logOut', (req, res) => {
     req.logOut(function (err) {
-        if(err) {
+        if (err) {
             console.log(err);
             return res.redirect('/admin/')
-        }else{
+        } else {
             return res.redirect('/admin/')
         }
 
@@ -30,7 +30,7 @@ routes.post('/sendOtp', adminctrl.sendOtp)
 routes.post('/ResendOtp', adminctrl.ResendOtp)
 routes.get('/otpPage', adminctrl.otpPage);
 routes.post('/verifyOtp', adminctrl.verifyOtp);
-routes.get('/changePassword',passport.AuthUser, adminctrl.changePassword);
+routes.get('/changePassword', passport.AuthUser, adminctrl.changePassword);
 routes.post('/updateChangePass', adminctrl.updateChangePass)
 
 
@@ -49,9 +49,9 @@ routes.get('/inactive/:id', adminctrl.inactive);
 routes.get('/searchAdmin', adminctrl.searchAdmin);
 
 //category
-routes.use('/category',require('./category.routes'))
+routes.use('/category', passport.AuthUser , require('./category.routes'))
 
 //subcategory
-routes.use('/subCategory',require('./subCategory.routes'))
+routes.use('/subCategory', passport.AuthUser, require('./subCategory.routes'))
 
 module.exports = routes;
