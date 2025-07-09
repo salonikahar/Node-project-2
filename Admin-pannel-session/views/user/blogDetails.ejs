@@ -1,6 +1,6 @@
 <%- include('layout/userHeader') %>
 
-<main class="main">
+  <main class="main">
 
     <div class="container">
       <div class="row">
@@ -14,34 +14,29 @@
               <article class="article">
 
                 <div class="post-img">
-                  <img src="assets/img/blog/blog-1.jpg" alt="" class="img-fluid">
+                  <img src="<%= subCate.poster %>" alt="" class="img-fluid">
                 </div>
 
-                <h2 class="title">Dolorum optio tempore voluptas dignissimos cumque fuga qui quibusdam quia</h2>
+                <h2 class="title">
+                  <%= subCate.title %>
+                </h2>
 
                 <div class="meta-top">
                   <ul>
-                    <li class="d-flex align-items-center"><i class="bi bi-person"></i> <a href="blog-details.html">John Doe</a></li>
-                    <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a href="blog-details.html"><time datetime="2020-01-01">Jan 1, 2022</time></a></li>
-                    <li class="d-flex align-items-center"><i class="bi bi-chat-dots"></i> <a href="blog-details.html">12 Comments</a></li>
+                    <li class="d-flex align-items-center"><i class="bi bi-person"></i> <a href="blog-details.html">
+                        <%= admin.name %>
+                      </a></li>
+                    <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a href="blog-details.html"><time
+                          datetime="2020-01-01">
+                          <%= subCate.created_date %>
+                        </time></a></li>
+                    <li class="d-flex align-items-center"><i class="bi bi-chat-dots"></i> <a href="blog-details.html">12
+                        Comments</a></li>
                   </ul>
                 </div><!-- End meta top -->
 
                 <div class="content">
-                  <p>
-                    Similique neque nam consequuntur ad non maxime aliquam quas. Quibusdam animi praesentium. Aliquam et laboriosam eius aut nostrum quidem aliquid dicta.
-                    Et eveniet enim. Qui velit est ea dolorem doloremque deleniti aperiam unde soluta. Est cum et quod quos aut ut et sit sunt. Voluptate porro consequatur assumenda perferendis dolore.
-                  </p>
-
-                  <p>
-                    Sit repellat hic cupiditate hic ut nemo. Quis nihil sunt non reiciendis. Sequi in accusamus harum vel aspernatur. Excepturi numquam nihil cumque odio. Et voluptate cupiditate.
-                  </p>
-
-                  <blockquote>
-                    <p>
-                      Et vero doloremque tempore voluptatem ratione vel aut. Deleniti sunt animi aut. Aut eos aliquam doloribus minus autem quos.
-                    </p>
-                  </blockquote>
+                  <%- subCate.description %>
 
 
                 </div><!-- End post content -->
@@ -76,36 +71,44 @@
                 <div class="d-flex">
                   <div class="comment-img"><img src="assets/img/blog/comments-1.jpg" alt=""></div>
                   <div>
-                    <h5><a href="">Georgia Reader</a> <a href="#" class="reply"><i class="bi bi-reply-fill"></i> Reply</a></h5>
+                    <h5><a href="">Georgia Reader</a> <a href="#" class="reply"><i class="bi bi-reply-fill"></i>
+                        Reply</a></h5>
                     <time datetime="2020-01-01">01 Jan,2022</time>
                     <p>
-                      Et rerum totam nisi. Molestiae vel quam dolorum vel voluptatem et et. Est ad aut sapiente quis molestiae est qui cum soluta.
+                      Et rerum totam nisi. Molestiae vel quam dolorum vel voluptatem et et. Est ad aut sapiente quis
+                      molestiae est qui cum soluta.
                       Vero aut rerum vel. Rerum quos laboriosam placeat ex qui. Sint qui facilis et.
                     </p>
                   </div>
                 </div>
               </div><!-- End comment #1 -->
 
-              
 
-                <div id="comment-reply-1" class="comment comment-reply">
-                  <div class="d-flex">
-                    <div class="comment-img"><img src="assets/img/blog/comments-3.jpg" alt=""></div>
-                    <div>
-                      <h5><a href="">Lynda Small</a> <a href="#" class="reply"><i class="bi bi-reply-fill"></i> Reply</a></h5>
-                      <time datetime="2020-01-01">01 Jan,2022</time>
-                      <p>
-                        Enim ipsa eum fugiat fuga repellat. Commodi quo quo dicta. Est ullam aspernatur ut vitae quia mollitia id non. Qui ad quas nostrum rerum sed necessitatibus aut est. Eum officiis sed repellat maxime vero nisi natus. Amet nesciunt nesciunt qui illum omnis est et dolor recusandae.
 
-                        Recusandae sit ad aut impedit et. Ipsa labore dolor impedit et natus in porro aut. Magnam qui cum. Illo similique occaecati nihil modi eligendi. Pariatur distinctio labore omnis incidunt et illum. Expedita et dignissimos distinctio laborum minima fugiat.
+              <div id="comment-reply-1" class="comment comment-reply">
+                <div class="d-flex">
+                  <div class="comment-img"><img src="assets/img/blog/comments-3.jpg" alt=""></div>
+                  <div>
+                    <h5><a href="">Lynda Small</a> <a href="#" class="reply"><i class="bi bi-reply-fill"></i> Reply</a>
+                    </h5>
+                    <time datetime="2020-01-01">01 Jan,2022</time>
+                    <p>
+                      Enim ipsa eum fugiat fuga repellat. Commodi quo quo dicta. Est ullam aspernatur ut vitae quia
+                      mollitia id non. Qui ad quas nostrum rerum sed necessitatibus aut est. Eum officiis sed repellat
+                      maxime vero nisi natus. Amet nesciunt nesciunt qui illum omnis est et dolor recusandae.
 
-                        Libero corporis qui. Nam illo odio beatae enim ducimus. Harum reiciendis error dolorum non autem quisquam vero rerum neque.
-                      </p>
-                    </div>
+                      Recusandae sit ad aut impedit et. Ipsa labore dolor impedit et natus in porro aut. Magnam qui cum.
+                      Illo similique occaecati nihil modi eligendi. Pariatur distinctio labore omnis incidunt et illum.
+                      Expedita et dignissimos distinctio laborum minima fugiat.
+
+                      Libero corporis qui. Nam illo odio beatae enim ducimus. Harum reiciendis error dolorum non autem
+                      quisquam vero rerum neque.
+                    </p>
                   </div>
+                </div>
 
 
-            </div>
+              </div>
 
           </section><!-- /Blog Comments Section -->
 
@@ -149,7 +152,23 @@
 
         <div class="col-lg-4 sidebar">
 
-          
+          <div class="widgets-container">
+            <h4 class="sidebar-title">Latest Blogs</h4>
+
+            <% subCateData.forEach(blog=> { %>
+              <div class="sidebar-blog-post d-flex mb-3">
+                <div class="post-thumb me-3">
+                  <a href="/blogDetails/<%= blog._id %>">
+                    <img src="<%= blog.poster %>" alt="<%= blog.title %>" class="img-thumbnail"
+                      style="width: 80px; height: 60px; object-fit: cover;">
+                  </a>
+                </div>
+                
+              </div>
+              <% }) %>
+
+
+          </div>
 
         </div>
 

@@ -31,3 +31,25 @@ module.exports.viewCategory = async (req, res) => {
         return res.redirect('/admin/dashboard');
     }
 }
+
+module.exports.deleteCategory = async (req, res) => {
+    try {
+
+        let id = req.query.cateId;
+        // console.log(id);
+        let CategoryData = await categoryModel.findById(id);
+
+        let deleteCategory = await categoryModel.findByIdAndDelete(CategoryData);
+        // if(deleteCategory){
+        //     console.log('deleted');
+            
+        // }else{
+        //     console.log('error');    
+        // }
+        return res.redirect('/admin/category/viewCategory')
+
+    } catch (err) {
+        console.log(err);
+        return res.redirect('/admin/category/viewCategory')
+    }
+}

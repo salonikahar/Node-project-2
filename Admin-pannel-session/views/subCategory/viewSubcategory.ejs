@@ -52,7 +52,8 @@
                       <%= i++ %>
                     </td>
                     <td data-bs-toggle="modal" data-bs-target="#modal_<%= SubCategory._id %>" style="cursor:pointer;">
-                      <%= SubCategory.categoryId.category %>
+                     <%= SubCategory.categoryId ? SubCategory.categoryId.category : '' %>
+
                     </td>
                     <td data-bs-toggle="modal" data-bs-target="#modal_<%= SubCategory._id %>" style="cursor:pointer;">
                       <%= SubCategory.title %>
@@ -72,7 +73,7 @@
                         <div class="dropdown-menu">
                           <a class="dropdown-item"><i
                               class="icon-base bx bx-edit-alt me-1"></i> Edit</a>
-                          <a class="dropdown-item" ><i
+                          <a class="dropdown-item" href="/admin/SubCategory/deleteSubCategory/?subCateId=<%= SubCategory._id %>"><i
                               class="icon-base bx bx-trash me-1"></i>
                             Delete</a>
                         </div>
