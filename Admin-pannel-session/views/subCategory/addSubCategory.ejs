@@ -19,10 +19,10 @@
                   <label for="exampleFormControlSelect1" class="form-label">Category</label>
                   <select class="form-select" id="exampleFormControlSelect1" aria-label="Default select example"
                     name="categoryId">
-                    <option selected >Open this select Category</option>
+                    <option selected disabled>Open this select Category</option>
 
                     <% categoryData.map((v,i)=>{ %>
-                      <option value="<%= v.id %>" ><%= v.category %></option>
+                      <option value="<%= v._id %>" ><%= v.category %></option>
                       <% }) %>
                   </select>
                 </div>

@@ -1,6 +1,6 @@
 const { Admin } = require('mongodb');
 let mongoose = require('mongoose');
-;
+
 
 
 let categoryModel = mongoose.Schema({

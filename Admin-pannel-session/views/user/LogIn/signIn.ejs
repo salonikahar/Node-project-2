@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en" class="layout-wide customizer-hide">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User Sign Up | Sneat UI</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/img/favicon/favicon.ico" />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&display=swap"
+      rel="stylesheet" />
+
+    <!-- Core CSS -->
+    <link rel="stylesheet" href="/vendor/css/core.css" />
+    <link rel="stylesheet" href="/vendor/css/pages/page-auth.css" />
+    <link rel="stylesheet" href="/css/demo.css" />
+    <link rel="stylesheet" href="/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
+
+    <script src="/vendor/js/helpers.js"></script>
+    <script src="/js/config.js"></script>
+  </head>
+
+  <body>
+    <div class="container-xxl">
+      <div class="authentication-wrapper authentication-basic container-p-y">
+        <div class="authentication-inner">
+          <!-- Register Card -->
+          <div class="card px-sm-6 px-0">
+            <div class="card-body">
+              <!-- Logo -->
+              <div class="app-brand justify-content-center">
+                <a href="index.html" class="app-brand-link gap-2">
+                  <span class="app-brand-logo demo">
+                    <!-- SVG Logo same as login -->
+                    <img src="/img/favicon/favicon.ico" alt="Logo" width="30" />
+                  </span>
+                  <span class="app-brand-text demo text-heading fw-bold">Sneat</span>
+                </a>
+              </div>
+              <!-- /Logo -->
+
+              <h4 class="mb-1">Adventure starts here 🚀</h4>
+              <p class="mb-6">Make your account to manage everything</p>
+
+              <form id="formRegistration" class="mb-6" action="/userLogIn" method="post">
+                
+
+                <div class="mb-3">
+                  <label for="email" class="form-label">Email</label>
+                  <input
+                    type="email"
+                    class="form-control"
+                    id="email"
+                    name="email"
+                    placeholder="Enter your email"
+                    required />
+                </div>
+
+                <div class="mb-3 form-password-toggle">
+                  <label class="form-label" for="password">Password</label>
+                  <div class="input-group input-group-merge">
+                    <input
+                      type="password"
+                      id="password"
+                      class="form-control"
+                      name="password"
+                      placeholder="••••••••••••"
+                      required />
+                    <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+                  </div>
+                </div>
+                
+
+                <div class="mb-3">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="terms-conditions" required />
+                    <label class="form-check-label" for="terms-conditions">
+                      I agree to the <a href="#">terms and conditions</a>
+                    </label>
+                  </div>
+                </div>
+
+                <div class="mb-3">
+                  <button class="btn btn-primary d-grid w-100" type="submit">Create Account</button>
+                </div>
+              </form>
+
+              <p class="text-center">
+                <span>you do not have an account?</span>
+                <a href="/userRegister">
+                  <span>Sign in</span>
+                </a>
+              </p>
+            </div>
+          </div>
+          <!-- /Register Card -->
+        </div>
+      </div>
+    </div>
+
+    <!-- JS -->
+    <script src="/vendor/libs/jquery/jquery.js"></script>
+    <script src="/vendor/libs/popper/popper.js"></script>
+    <script src="/vendor/js/bootstrap.js"></script>
+    <script src="/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+    <script src="/vendor/js/menu.js"></script>
+    <script src="/js/main.js"></script>
+  </body>
+</html>
