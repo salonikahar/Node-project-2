@@ -140,3 +140,12 @@ module.exports.userRegister = async (req, res) => {
 module.exports.signIn = (req , res)=>{
   return res.render('user/LogIn/signIn')
 }
+
+module.exports.userSignin = (req,res)=>{
+  try{
+    return res.redirect('/')
+  }catch{
+    console.log('err');
+    return res.redirect('/signUp')
+  }
+}

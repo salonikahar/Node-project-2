@@ -2,8 +2,7 @@ const passport = require('passport');
 const adminModel = require('../models/adminModel');
 const localStrategy = require('passport-local').Strategy;
 const bcrypt = require('bcrypt');
-const admin = require('../models/adminModel');
-
+const userModel = require('../models/userModel')
 
 passport.use('admin',new localStrategy({
     usernameField: 'email'
@@ -19,6 +18,22 @@ passport.use('admin',new localStrategy({
         return done(null, false)
     }
 }))
+
+passport.use('user',new localStrategy({
+    usernameField: 'email'
+}, async function (email, password, done) {
+    let userData = await userModel.findOne({ email: email })
+    if (userData) {
+        if(await bcrypt.compare(password , userData.password)){
+            return done(null , userData);
+        }else{
+            return done(null,false)
+        }
+    } else {
+        return done(null, false)
+    }
+}))
+
 
 passport.serializeUser(async function (user , done){
     return done(null,user.id)
