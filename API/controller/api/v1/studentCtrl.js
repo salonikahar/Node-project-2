@@ -1,7 +1,11 @@
 const studentModel = require('../../../models/studentModel')
 
 module.exports.addStudent = async (req, res) => {
-    console.log(req.body);
+
+    if(req.file){
+        req.body.image = studentModel.imagePath+'/'+req.file.filename;
+    }
+    
     let studData = await studentModel.create(req.body);
     if (studData) {
         return res.status(200).json({ 'msg': 'student record inserted', status: 'success', data: studData })
