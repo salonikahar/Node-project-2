@@ -90,7 +90,7 @@ module.exports.searchAdmin = async (req, res) => {
         }
 
         let page = 0;
-        let perPage = 3;
+        let perPage = 3; 
 
         let adminData = [];
         if (search !== '') {
