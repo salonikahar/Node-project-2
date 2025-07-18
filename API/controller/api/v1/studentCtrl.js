@@ -1,5 +1,5 @@
 const studentModel = require('../../../models/studentModel')
-
+//add express-validtor and cloudinary and swagger-ui-express
 module.exports.addStudent = async (req, res) => {
 
     if (req.file) {

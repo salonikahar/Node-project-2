@@ -8,7 +8,7 @@ let imagePath = '/uploads/student';
 let studentSchema = mongoose.Schema({
     name: String,
     email: String,
-    passport: String,
+    password: String,
     gender: String,
     hobby: Array,
     city: String,
