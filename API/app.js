@@ -5,7 +5,7 @@ const app = express();
 const db = require('./config/db')
 
 const passport = require('passport');
-const passportJwt = require('./config/passport')
+const passportJwt = require('./config/passport-jwt')
 const session = require('express-session')
 
 app.use(express.urlencoded());

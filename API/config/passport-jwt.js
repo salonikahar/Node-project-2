@@ -1,15 +1,18 @@
 const passport = require('passport');
-const { Strategy: JwtStrategy, ExtractJwt } = require('passport-jwt');
+const jwtStrategy = require('passport-jwt').Strategy;
+const extractJwt = require('passport-jwt').ExtractJwt;
 const facultyModel = require('../models/facultyModel')
 
 
 var options = {
-    jwtFormRequest: extractJwt.fromAuthHeaderAsBearerToken(),
+    jwtFromRequest: extractJwt.fromAuthHeaderAsBearerToken(),
     secretOrKey: 'STD'
 }
 
 passport.use(new jwtStrategy(options, async (payload, done) => {
-     let checkFacultyExsist = await facultyModel.findById(payload._id);
+    console.log(payload);
+
+     let checkFacultyExsist = await facultyModel.findById(payload.facultyData._id);
      if(checkFacultyExsist){
         return done(null,checkFacultyExsist);
      }else{
@@ -18,7 +21,7 @@ passport.use(new jwtStrategy(options, async (payload, done) => {
 }));
 
 passport.serializeUser(function(user,done){
-    return done(null,user,id);
+    return done(null,user.id);
 })
 
 passport.deserializeUser(async function(id,done){

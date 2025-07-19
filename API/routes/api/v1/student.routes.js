@@ -4,7 +4,7 @@ const studentCtrl = require('../../../controller/api/v1/studentCtrl')
 const studentModel = require("../../../models/studentModel")
 const passport = require('passport')
 
-routes.post('/addStudent', studentModel.uploadStudentImg, studentCtrl.addStudent);
+routes.post('/addStudent', passport.authenticate('jwt', { failureRedirect: 'api/student/getStudent/failedLogin' }), studentModel.uploadStudentImg, studentCtrl.addStudent);
 routes.get('/getStudent', passport.authenticate('jwt', { failureRedirect: 'api/student/getStudent/failedLogin' }), studentCtrl.getStudent);
 
 routes.get('/failedLogin', async (req, res) => {
