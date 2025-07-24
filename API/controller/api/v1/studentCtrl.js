@@ -2,6 +2,10 @@ const studentModel = require('../../../models/studentModel')
 //add express-validtor and cloudinary and swagger-ui-express
 module.exports.addStudent = async (req, res) => {
 
+    console.log(req.file);
+    console.log(req.body);
+    
+    
     if (req.file) {
         req.body.image = studentModel.imagePath + '/' + req.file.filename;
     }
