@@ -13,7 +13,7 @@ routes.get('/failedLogin', async (req, res) => {
     return res.status(404).json({ msg: "try to login for faculty ", status: "failed" })
 })
 
-routes.delete('/deleteStudentData/:id', studentCtrl.deleteStudentData);
-routes.put('/updateStudentData/:id', studentCtrl.updateStudentData)
+routes.delete('/deleteStudentData/:id', jwtAuth, studentCtrl.deleteStudentData);
+routes.put('/updateStudentData/:id',jwtAuth, studentCtrl.updateStudentData)
 
 module.exports = routes;
