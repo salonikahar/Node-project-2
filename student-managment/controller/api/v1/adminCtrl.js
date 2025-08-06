@@ -3,7 +3,13 @@ const adminModel = require('../../../model/adminModel');
 
 module.exports.addAdmin = async (req, res) => {
     try {
-        // console.log(req.body);
+        console.log(req.body);
+        console.log(req.file);
+
+        if(req.file){
+            req.body.adminImage = req.file.path 
+        }
+
         let adminData = await adminModel.create(req.body);
         if(adminData){
             return res.status(200).json({ 'msg':'Admin Added', status :'success' , data : adminData})
